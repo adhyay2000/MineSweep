@@ -13,4 +13,6 @@ TODO:-
 To Run this game
 just download the entire project and type command
 
-java MineSweeper in your JRE.
+java MineSweeper
+
+in your JRE.
