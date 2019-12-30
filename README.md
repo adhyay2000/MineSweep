@@ -1,5 +1,6 @@
 # MineSweep
 Please Review if you are watching it.
+
 A Fully functioning MineSweeper game built using JAVA swing.
 TODO:-
 1. To Apply AI to create something akin to this https://www.youtube.com/watch?v=cGUHehFGqBc&t=43s
