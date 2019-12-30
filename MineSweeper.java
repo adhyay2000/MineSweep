@@ -2,7 +2,6 @@ import java.util.Random;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-
 public class MineSweeper{
 	public static void main(String[] args){
 		// int size=20;
@@ -11,7 +10,7 @@ public class MineSweeper{
 		// b.fillBomb();
 		// b.calculateValue();
 		// b.display();
-		new TT1();
+		TT1 t1=new TT1();
 	}
 }
 class TT1 extends JFrame implements ActionListener{
@@ -93,6 +92,7 @@ class TT1 extends JFrame implements ActionListener{
 		int x=0,y=0;
 		for(int i=0,j=0;i<size*size;i++,x+=50,j++){
 			buttons[i]=new JButton();
+			buttons[i].setBackground(Color.LIGHT_GRAY);
 			if(j==size){j=0;y+=50;x=0;}
 			buttons[i].setBounds(x,y,50,50);
 			add(buttons[i]);
@@ -103,16 +103,53 @@ class TT1 extends JFrame implements ActionListener{
 		add(reset);
 		reset.addActionListener(this);
 	}
+	void show_all_mines(){
+		//reset();
+		//gameOver() ho chuka hai
+		for(int i=0;i<size*size;i++){
+			if(mat[i/size][i%size]==-1){
+				buttons[i].setBackground(Color.DARK_GRAY);
+				buttons[i].setIcon(num[0]);
+			}
+		}
+	}
 	void gameOver(){
-		int choice=JOptionPane.showConfirmDialog(null,"You Hit a Mine\n Want to play again","You Hit a Mine\n Want to play again",JOptionPane.YES_NO_OPTION);
-		//0 for Yes 1 for No
+		show_all_mines();
+		// final JOptionPane optionPane = new JOptionPane(
+		// 	"You hit a mine\n"+"Do you want to play again",JOptionPane.QUESTION_MESSAGE,JOptionPane.YES_NO_OPTION);
+		// final JDialog dialog=new JDialog(this,"click a button",true);
+		// dialog.setContentPane(optionPane);
+		// // optionPane.addPropertyChangeListener(
+		// // 	new PropertyChangeListener(){
+		// // 		String prop = e.getPropertyName();
+		// // 		if (dialog.isVisible()      && (e.getSource() == optionPane)
+  // //            && (prop.equals(JOptionPane.VALUE_PROPERTY))) {
+  // //               //If you were going to check something
+  // //               //before closing the window, you'd do
+  // //               //it here.
+  // //               dialog.setVisible(false);
+  // //           }
+  // //       }
+		// 	// });
+		// dialog.setVisible(true);
+		// dialog.pack();
+		// System.out.println(optionPane.getValue());
+		// System.out.println("hh");
+		// System.exit(0);
+		// int choice=((Integer)optionPane.getValue()).intValue();
+		// JOptionPane jop=new JOptionPane();
+		int choice=JOptionPane.showConfirmDialog(null,"You Hit a Mine. Want to play again","Message",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+		// // jop.setDefaultCloseOperation(JOptionPane.DISPOSE_ON_CLOSE);
+		// //0 for Yes 1 for No
+
 		if(choice==0){
 			dispose();
 			new TT1();
 		}
 		else if(choice==1){
 			setVisible(false);
-			dispose();
+			// dispose();
+			System.exit(0);
 		}
 		// JOptionPane.showConfirmDialog(TT1.this,"YOU HIT A MINE.\n BETTER LUCK NEXT TIME");
 	}
@@ -122,6 +159,7 @@ class TT1 extends JFrame implements ActionListener{
 		}		
 	}
 	void show(int i){
+		buttons[i].setBackground(Color.DARK_GRAY);
 		if(buttons[i].getIcon()==null){
 			if(mat[i/size][i%size]!=0){
 				if(mat[i/size][i%size]==-1){
@@ -145,6 +183,15 @@ class TT1 extends JFrame implements ActionListener{
 			if(i+1>=0 && i<size*size) show(i+1);
 			if(i+size>=0 && i+size<size*size) show(i+size);
 			if(i+size+1>=0 && i+size+1<size*size) show(i+size+1);
+			return;
+		}
+		if((i+1)%size==0){
+			if(i-size>=0 && i-size<size*size) show(i-size);
+			if(i-size-1>=0 && i-size-1<size*size) show(i-size-1);
+			if(i-1>=0 && i-1<size*size) show(i-1);
+			if(i+size-1>=0 && i+size-1<size*size) show(i+size-1);
+			if(i+size>=0 && i+size<size*size) show(i+size);
+			return;
 		}
 		if(i-1>=0 && i-1<size*size) show(i-1);
 		if(i+1>=0 && i+1<size*size) show(i+1);
